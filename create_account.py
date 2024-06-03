@@ -1,4 +1,5 @@
 from dbconnect import get_database
+from main_game import lobby
 
 
 def make_account(username, password):
@@ -16,6 +17,7 @@ def make_account(username, password):
     print("You can now login with your username and password.")
 
     main()
+
 
 def login(username, password):
     db = get_database()
@@ -55,6 +57,7 @@ def main():
         print("Invalid choice!")
         main()
 
+
 def main_menu(account):
     print("Welcome to the main menu, " + account["username"] + "!")
     print("1. Play the game")
@@ -64,6 +67,7 @@ def main_menu(account):
 
     if choice == "1":
         print("Starting the game...")
+        lobby(account)
     elif choice == "2":
         print("Logging out...")
         main()
@@ -72,6 +76,4 @@ def main_menu(account):
         print("\n" * 100)
         main_menu(account)
 
-
-if __name__ == "__main__":
-    main()
+    return choice, account

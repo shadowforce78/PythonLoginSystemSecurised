@@ -1,0 +1,2 @@
+def lobby(account):
+    return
