@@ -77,3 +77,7 @@ def main_menu(account):
         main_menu(account)
 
     return choice, account
+
+
+if __name__ == "__main__":
+    main()
