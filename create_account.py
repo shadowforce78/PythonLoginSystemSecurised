@@ -59,6 +59,16 @@ def main():
 
 
 def main_menu(account):
+    world_map = [['T', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+             [' ', ' ', ' ', 'T', ' ', ' ', ' ', ' '],
+             [' ', ' ', ' ', ' ', ' ', 'T', ' ', ' '],
+             [' ', 'T', ' ', ' ', ' ', ' ', ' ', ' '],
+             [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+             [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
+             [' ', ' ', ' ', ' ', 'T', ' ', ' ', ' '],
+             [' ', ' ', ' ', ' ', ' ', ' ', ' ', 'K']]
+    x = 0
+    y = 0
     print("Welcome to the main menu, " + account["username"] + "!")
     print("1. Play the game")
     print("2. Logout")
@@ -67,7 +77,7 @@ def main_menu(account):
 
     if choice == "1":
         print("Starting the game...")
-        lobby(account)
+        lobby(x, y, world_map, account)
     elif choice == "2":
         print("Logging out...")
         main()
