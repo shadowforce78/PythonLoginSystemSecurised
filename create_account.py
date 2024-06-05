@@ -1,5 +1,6 @@
 from dbconnect import get_database
 from main_game import lobby
+import os
 
 
 def make_account(username, password):
@@ -28,6 +29,7 @@ def login(username, password):
     if account:
         print("Login successful!")
         print("Welcome, " + username + "!")
+        os.system('cls' if os.name == 'nt' else 'clear')
         main_menu(account)
     else:
         print("Login failed!")
@@ -55,20 +57,11 @@ def main():
         login(username, password)
     else:
         print("Invalid choice!")
+        os.system('cls' if os.name == 'nt' else 'clear')
         main()
 
 
 def main_menu(account):
-    world_map = [['T', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-             [' ', ' ', ' ', 'T', ' ', ' ', ' ', ' '],
-             [' ', ' ', ' ', ' ', ' ', 'T', ' ', ' '],
-             [' ', 'T', ' ', ' ', ' ', ' ', ' ', ' '],
-             [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-             [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-             [' ', ' ', ' ', ' ', 'T', ' ', ' ', ' '],
-             [' ', ' ', ' ', ' ', ' ', ' ', ' ', 'K']]
-    x = 0
-    y = 0
     print("Welcome to the main menu, " + account["username"] + "!")
     print("1. Play the game")
     print("2. Logout")
@@ -77,13 +70,15 @@ def main_menu(account):
 
     if choice == "1":
         print("Starting the game...")
-        lobby(x, y, world_map, account)
+        os.system('cls' if os.name == 'nt' else 'clear')
+        lobby(account)
     elif choice == "2":
         print("Logging out...")
+        os.system('cls' if os.name == 'nt' else 'clear')
         main()
     else:
         print("Invalid choice!")
-        print("\n" * 100)
+        os.system('cls' if os.name == 'nt' else 'clear')
         main_menu(account)
 
     return choice, account
