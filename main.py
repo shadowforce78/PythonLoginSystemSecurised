@@ -61,24 +61,14 @@ def loginMenu():
     print(chalk.red("2. Back"))
 
 
-def register():
+def register(uuid):
     username = input("Enter username: ")
     password = input("Enter password: ")
-    data = {"username": username, "password": password}
-    with open(dbFile, "w") as f:
-        json.dump(data, f)
-    print(chalk.green("Registered successfully!"))
+    
 
 
 def login():
-    username = input("Enter username: ")
-    password = input("Enter password: ")
-    with open(dbFile, "r") as f:
-        data = json.load(f)
-    if data["username"] == username and data["password"] == password:
-        print(chalk.green("Logged in successfully!"))
-    else:
-        print(chalk.red("Invalid credentials!"))
+    pass
 
 
 def main():
