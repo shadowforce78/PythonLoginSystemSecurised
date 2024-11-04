@@ -2,17 +2,44 @@ import simple_chalk as chalk
 import json
 import os
 import uuid
+from cryptography.fernet import Fernet
+from decrypt import decryptUUID
 
 dbFile = "db.json"
+uuidFile = "uuid.txt"
+
+
+def generateKey():
+    # Génère une clé et la sauvegarde dans un fichier caché
+    keyFile = "key.key"
+    if not os.path.exists(keyFile):
+        key = Fernet.generate_key()
+        with open(keyFile, "wb") as f:
+            f.write(key)
+        print(chalk.green("Encryption key generated!"))
+    else:
+        print(chalk.blue("Encryption key already exists!"))
 
 
 def createUUID():
-    myuuid = uuid.uuid4()  # Generate a random UUID
-    uuidFile = "uuid.txt"
-    with open(uuidFile, "w") as f:
-        f.write(str(myuuid))  # Write the UUID to the file
-    print(chalk.green("UUID created successfully!"))
-    os.system(f"attrib +h {uuidFile}")  # Hide the file
+    generateKey()  # Appel de la fonction pour créer la clé
+    with open("key.key", "rb") as f:
+        key = f.read()
+    cipher = Fernet(key)
+
+    # Check if UUID file already exists
+    if os.path.exists(uuidFile):
+        print(chalk.blue("UUID already exists!"))
+    else:
+        myuuid = uuid.uuid4()
+        encrypted_uuid = cipher.encrypt(str(myuuid).encode())
+        with open(uuidFile, "wb") as f:
+            f.write(encrypted_uuid)  # Écriture de l'UUID chiffré
+        print(chalk.green("Encrypted UUID created successfully!"))
+        if os.name == "nt":
+            os.system(f"attrib +h {uuidFile}")
+        else:
+            os.rename(uuidFile, f".{uuidFile}")
 
 
 def mainMenu():
@@ -57,6 +84,10 @@ def login():
 def main():
     while True:
         mainMenu()
+
+        UUID = decryptUUID()
+        print(chalk.blue(f"UUID: {UUID}"))
+
         choice = input("Enter your choice: ")
         if choice == "1":
             loginMenu()
@@ -84,3 +115,4 @@ def main():
 
 if __name__ == "__main__":
     createUUID()
+    main()
