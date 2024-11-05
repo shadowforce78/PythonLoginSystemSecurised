@@ -82,8 +82,19 @@ def register(uuid):
             json.dump(data, f, indent=4)
 
 
-def login():
-    pass
+def login(uuid):
+    username = input("Enter username: ")
+    password = input("Enter password: ")
+
+    with open(dbFile, "r") as f:
+        db = json.load(f)
+
+    for key, value in db.items():
+        if value["username"] == username and value["password"] == password:
+            print(chalk.green("Login successful!"))
+            break
+    else:
+        print(chalk.red("Invalid credentials!"))
 
 
 def main():
@@ -98,7 +109,7 @@ def main():
             loginMenu()
             choice = input("Enter your choice: ")
             if choice == "1":
-                login()
+                login(UUID)
             elif choice == "2":
                 continue
             else:
