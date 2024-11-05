@@ -64,7 +64,22 @@ def loginMenu():
 def register(uuid):
     username = input("Enter username: ")
     password = input("Enter password: ")
+    data = {
+        uuid: {
+            "username": username,
+            "password": password
+        }
+    }
     
+    if os.path.exists(dbFile):
+        with open(dbFile, "r") as f:
+            db = json.load(f)
+        db.update(data)
+        with open(dbFile, "w") as f:
+            json.dump(db, f, indent=4)
+    else:
+        with open(dbFile, "w") as f:
+            json.dump(data, f, indent=4)
 
 
 def login():
@@ -92,7 +107,7 @@ def main():
             registerMenu()
             choice = input("Enter your choice: ")
             if choice == "1":
-                register()
+                register(UUID)
             elif choice == "2":
                 continue
             else:
