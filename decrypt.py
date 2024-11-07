@@ -8,7 +8,6 @@ def decryptUUID():
         uuidFile = 'uuid.txt'
     else:
         uuidFile = '.uuid.txt'
-    # Decrypt the UUID
     with open("key.key", "rb") as f:
         key = f.read()
     cipher = Fernet(key)
