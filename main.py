@@ -3,7 +3,7 @@ import json
 import os
 import uuid
 from cryptography.fernet import Fernet
-from decrypt import decryptUUID
+
 
 dbFile = "db.json"
 uuidFile = "uuid.txt"
@@ -127,6 +127,19 @@ def main():
             break
         else:
             print(chalk.red("Invalid choice!"))
+
+def decryptUUID():
+    if os.name == 'nt':
+        uuidFile = 'uuid.txt'
+    else:
+        uuidFile = '.uuid.txt'
+    with open("key.key", "rb") as f:
+        key = f.read()
+    cipher = Fernet(key)
+    with open(f"{uuidFile}", "rb") as f:
+        encrypted_uuid = f.read()
+    uuid = cipher.decrypt(encrypted_uuid).decode()
+    return uuid
 
 
 if __name__ == "__main__":
